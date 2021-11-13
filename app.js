@@ -5,6 +5,7 @@ const title = document.querySelector('.title');
 const start = document.querySelector('.btn__reset');
 const character = document.querySelector('#phrase ul');
 const overlay = document.getElementById('overlay');
+const body = document.getElementsByTagName('body');
 let missed = 0;
 
 
@@ -21,6 +22,7 @@ const phrases =
     'Hey there'
 ];
 
+//function picks a random phrase from the array
 function getRandomPhraseAsArray(arr) {
     const randomPhrase = Math.floor(Math.random() * arr.length);
     const characterArray = arr[randomPhrase].split('');
@@ -47,6 +49,7 @@ function addPhraseToDisplay(arr) {
 
 addPhraseToDisplay(randPhrase);
 
+//checks the letter the person clicks on to see if it matches the phrase chosen
 function checkLetter(button) {
     let letter = document.querySelectorAll('li.letter') && document.querySelectorAll('li:not(.show)');
     let match = null;
@@ -72,6 +75,7 @@ qwerty.forEach(key => key.addEventListener('click', () => {
     checkWin();
 }));
 
+//checks to see if the person one or lost the game, and displays different messages for both.
 function checkWin() {
     let show = document.querySelectorAll('li.show');
     let letters = document.querySelectorAll('li.letter');
@@ -91,6 +95,7 @@ function checkWin() {
     }
 }
 
+//lets the person reset the game when they win or lose and have a new random phrase appear.
 function resetGame() {
     missed = 0;
 
