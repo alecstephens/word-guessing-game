@@ -2,31 +2,32 @@ const qwerty = document.querySelectorAll('#qwerty button');
 const phrase = document.getElementById('phrase');
 const heart = document.querySelectorAll('li > img');
 const title = document.querySelector('.title');
-const startButton = document.querySelector('.btn__reset');
+const start = document.querySelector('.btn__reset');
 const character = document.querySelector('#phrase ul');
-const start = document.getElementById('overlay');
+const overlay = document.getElementById('overlay');
 let missed = 0;
 
 
-startButton.addEventListener('click', () => {
-    start.style.display = 'none';
+start.addEventListener('click', () => {
+    overlay.style.display = 'none';
 });
 
-const phrases = [
-    'Family guy',
+const phrases = 
+[
+    'Family Guy',
     'Crazy people',
-    'American dad',
+    'American Dad',
     'Off we go',
     'Hey there'
 ];
 
 function getRandomPhraseAsArray(arr) {
     const randomPhrase = Math.floor(Math.random() * arr.length);
-    let characterArray = arr[randomPhrase].split('');
+    const characterArray = arr[randomPhrase].split('');
     return characterArray;
 }
 
-
+const randPhrase = getRandomPhraseAsArray(phrases);
 
 function addPhraseToDisplay(arr) {
     for(let i = 0; i < arr.length; i++) {
@@ -44,17 +45,14 @@ function addPhraseToDisplay(arr) {
     }
 }
 
-const randPhrase = getRandomPhraseAsArray(phrases);
 addPhraseToDisplay(randPhrase);
 
 function checkLetter(button) {
-    let letter = document.querySelectorAll('li.letter');
-    let notShow = document.querySelectorAll('li:not(.show)');
-    let combined = letter && notShow;
+    let letter = document.querySelectorAll('li.letter') && document.querySelectorAll('li:not(.show)');
     let match = null;
     
     for(let i = 0; i < letter.length; i++) {
-        if(letter[i].textContent.toLowerCase() === button.textContent.toLowerCase()) {
+        if(letter[i].textContent.toUpperCase() === button.textContent.toUpperCase()) {
             letter[i].classList.add('show');
             match = letter[i];
         }
@@ -62,7 +60,7 @@ function checkLetter(button) {
     return match;
 }
 
-qwerty.forEach( key => key.addEventListener('click', function () {
+qwerty.forEach(key => key.addEventListener('click', () => {
     key.className += "chosen";
     let letterFound = checkLetter(key);
     key.setAttribute('disabled', true);
@@ -75,20 +73,20 @@ qwerty.forEach( key => key.addEventListener('click', function () {
 }));
 
 function checkWin() {
-    let show = document.getElementsByClassName('show');
-    let letters = document.getElementsByClassName('letters');
+    let show = document.querySelectorAll('li.show');
+    let letters = document.querySelectorAll('li.letter');
 
     if(show.length === letters.length) {
-        start.classList.add('win');
-        start.style.display = 'flex';
-        title.textContent = 'Great Job!'
-        startButton.textContent = 'Another Phrase?'
+        overlay.classList.add('win');
+        overlay.style.display = 'flex';
+        title.textContent = 'Great Job!';
+        start.textContent = 'Another Phrase?';
         resetGame();
-    } else if(missed === 5) {
-        start.classList.add('lose');
-        start.style.display = 'flex';
+    } else if(missed == 5) {
+        overlay.classList.add('lose');
+        overlay.style.display = 'flex';
         title.textContent = 'Better luck next time.';
-        startButton.textContent = 'Try Again?'
+        start.textContent = 'Try Again?'
         resetGame();
     }
 }
